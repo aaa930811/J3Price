@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="J3PriceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="varchar" MaxLength="50" />
+          <Property Name="ProductName" Type="varchar" MaxLength="50" />
+          <Property Name="ProductNickName1" Type="varchar" MaxLength="50" />
+          <Property Name="ProductNickName2" Type="varchar" MaxLength="50" />
+          <Property Name="ProductNickName3" Type="varchar" MaxLength="50" />
+          <Property Name="ProductNickName4" Type="varchar" MaxLength="50" />
+          <Property Name="ProductNickName5" Type="varchar" MaxLength="50" />
+          <Property Name="ProductImageUrl" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Quotes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Region" Type="varchar" MaxLength="50" />
+          <Property Name="Server" Type="varchar" MaxLength="50" />
+          <Property Name="SaleType" Type="varchar" MaxLength="50" />
+          <Property Name="ProductID" Type="varchar" MaxLength="50" />
+          <Property Name="ProducPrice" Type="varchar" MaxLength="50" />
+          <Property Name="DealTime" Type="datetime" />
+          <Property Name="DealImageUrl" Type="varchar" MaxLength="50" />
+          <Property Name="Bidder" Type="varchar" MaxLength="50" />
+          <Property Name="QuotationTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RegionMst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegionID" Type="varchar" MaxLength="50" />
+          <Property Name="RegionName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SaleTypeMst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeCode" Type="varchar" MaxLength="50" />
+          <Property Name="TypeName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ServiceMst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegionID" Type="varchar" MaxLength="50" />
+          <Property Name="ServiceID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ServiceName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="J3PriceModelStoreContainer">
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Quotes" EntityType="Self.Quotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegionMst" EntityType="Self.RegionMst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaleTypeMst" EntityType="Self.SaleTypeMst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceMst" EntityType="Self.ServiceMst" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="J3PriceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductNickName1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductNickName2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductNickName3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductNickName4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductNickName5" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductImageUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Quotes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Region" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Server" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SaleType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProducPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DealTime" Type="DateTime" Precision="3" />
+          <Property Name="DealImageUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Bidder" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="QuotationTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="RegionMst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ServiceMst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SaleTypeMst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="J3PriceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="Quotes" EntityType="Self.Quotes" />
+          <EntitySet Name="RegionMst" EntityType="Self.RegionMst" />
+          <EntitySet Name="ServiceMst" EntityType="Self.ServiceMst" />
+          <EntitySet Name="SaleTypeMst" EntityType="Self.SaleTypeMst" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="J3PriceModelStoreContainer" CdmEntityContainer="J3PriceEntities">
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="J3PriceModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductNickName1" ColumnName="ProductNickName1" />
+                <ScalarProperty Name="ProductNickName2" ColumnName="ProductNickName2" />
+                <ScalarProperty Name="ProductNickName3" ColumnName="ProductNickName3" />
+                <ScalarProperty Name="ProductNickName4" ColumnName="ProductNickName4" />
+                <ScalarProperty Name="ProductNickName5" ColumnName="ProductNickName5" />
+                <ScalarProperty Name="ProductImageUrl" ColumnName="ProductImageUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quotes">
+            <EntityTypeMapping TypeName="J3PriceModel.Quotes">
+              <MappingFragment StoreEntitySet="Quotes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Server" ColumnName="Server" />
+                <ScalarProperty Name="SaleType" ColumnName="SaleType" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProducPrice" ColumnName="ProducPrice" />
+                <ScalarProperty Name="DealTime" ColumnName="DealTime" />
+                <ScalarProperty Name="DealImageUrl" ColumnName="DealImageUrl" />
+                <ScalarProperty Name="Bidder" ColumnName="Bidder" />
+                <ScalarProperty Name="QuotationTime" ColumnName="QuotationTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegionMst">
+            <EntityTypeMapping TypeName="J3PriceModel.RegionMst">
+              <MappingFragment StoreEntitySet="RegionMst">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceMst">
+            <EntityTypeMapping TypeName="J3PriceModel.ServiceMst">
+              <MappingFragment StoreEntitySet="ServiceMst">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleTypeMst">
+            <EntityTypeMapping TypeName="J3PriceModel.SaleTypeMst">
+              <MappingFragment StoreEntitySet="SaleTypeMst">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TypeCode" ColumnName="TypeCode" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
