@@ -1,10 +1,11 @@
-﻿using System;
+﻿using J3PriceModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace J3Price.DAL
 {
-    public class DALs
+    public class DALQuiz
     {
         /// <summary>
         /// 获取报价信息
@@ -14,19 +15,36 @@ namespace J3Price.DAL
         /// <param name="productname"></param>
         /// <param name="dealtime"></param>
         /// <returns></returns>
-        public List<Quotes> GetQuotesList(string regionid, string serviceid, string productname, DateTime dealtime)
+        public IEnumerable<QuotesModel> GetQuotesList(QuotesQueryModel model)
         {
+            string str = model.Server;
+            str = str.Substring(1, str.Length - 2);
+            string RegionID = str.Split(',')[0];
+            string ServiceID = str.Split(',')[1];
             using (var db = new J3PriceEntities())
             {
-                var q = from s in db.Quotes
-                        join p in db.Products
-                        on s.ProductID equals p.ProductID
-                        where s.RegionID == regionid
-                        && s.ServiceID == serviceid
-                        && p.ProductName == productname
-                        && s.DealTime == dealtime
-                        select s;
-                return q.ToList();
+                var query = from q in db.Quotes
+                            join p in db.Products on q.ProductID equals p.ProductID
+                            join r in db.RegionMst on q.RegionID equals r.RegionID
+                            join service in db.ServiceMst on q.ServiceID equals service.ServiceID
+                            join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
+                            where q.RegionID == RegionID
+                            && q.ServiceID == ServiceID
+                            && p.ProductName == model.ProductName
+                            && q.DealTime == model.DealTime
+                            select new QuotesModel
+                            {
+                                ID = q.ID,
+                                RegionName = r.RegionName,
+                                ServiceName = service.ServiceName,
+                                SaleTypeName = sale.SaleTypeName,
+                                ProductName = p.ProductName,
+                                ProducPrice = q.ProducPrice,
+                                DealTime = q.DealTime,
+                                Bidder = q.Bidder,
+                                QuotationTime = q.QuotationTime
+                            };
+                return query.ToList();
             }
         }
 

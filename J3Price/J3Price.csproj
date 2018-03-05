@@ -189,7 +189,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\QuotesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -264,6 +264,10 @@
     <ProjectReference Include="..\J3Price.DAL\J3Price.DAL.csproj">
       <Project>{1957a44c-66bd-4625-bc9c-4dc40b2591e9}</Project>
       <Name>J3Price.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\J3PriceModels\J3PriceModels.csproj">
+      <Project>{7c390098-8cd6-4511-a81a-1559eb74ee72}</Project>
+      <Name>J3PriceModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

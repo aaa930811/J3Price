@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Price", "J3Price\J3Price.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Price.DAL", "J3Price.DAL\J3Price.DAL.csproj", "{1957A44C-66BD-4625-BC9C-4DC40B2591E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3PriceModels", "J3PriceModels\J3PriceModels.csproj", "{7C390098-8CD6-4511-A81A-1559EB74EE72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1957A44C-66BD-4625-BC9C-4DC40B2591E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1957A44C-66BD-4625-BC9C-4DC40B2591E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1957A44C-66BD-4625-BC9C-4DC40B2591E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C390098-8CD6-4511-A81A-1559EB74EE72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C390098-8CD6-4511-A81A-1559EB74EE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C390098-8CD6-4511-A81A-1559EB74EE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C390098-8CD6-4511-A81A-1559EB74EE72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

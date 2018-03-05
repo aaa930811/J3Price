@@ -108,5 +108,11 @@
       <LastGenOutput>J3Price.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\J3PriceModels\J3PriceModels.csproj">
+      <Project>{7C390098-8CD6-4511-A81A-1559EB74EE72}</Project>
+      <Name>J3PriceModels</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
