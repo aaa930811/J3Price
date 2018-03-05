@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1051AC6A-C92C-4634-8DAA-BCD6DCCFD668}</ProjectGuid>
+    <ProjectGuid>{1957A44C-66BD-4625-BC9C-4DC40B2591E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>J3Price.DLL</RootNamespace>
-    <AssemblyName>J3Price.DLL</AssemblyName>
+    <RootNamespace>J3Price.DAL</RootNamespace>
+    <AssemblyName>J3Price.DAL</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,13 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -48,65 +50,63 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DALs.cs" />
-    <Compile Include="J3PriceModel.Context.cs">
+    <Compile Include="J3Price.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>J3PriceModel.Context.tt</DependentUpon>
+      <DependentUpon>J3Price.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="J3PriceModel.cs">
+    <Compile Include="J3Price.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>J3PriceModel.tt</DependentUpon>
+      <DependentUpon>J3Price.tt</DependentUpon>
     </Compile>
-    <Compile Include="J3PriceModel.Designer.cs">
+    <Compile Include="J3Price.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>J3PriceModel.edmx</DependentUpon>
+      <DependentUpon>J3Price.edmx</DependentUpon>
     </Compile>
     <Compile Include="Products.cs">
-      <DependentUpon>J3PriceModel.tt</DependentUpon>
+      <DependentUpon>J3Price.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quotes.cs">
-      <DependentUpon>J3PriceModel.tt</DependentUpon>
+      <DependentUpon>J3Price.tt</DependentUpon>
     </Compile>
     <Compile Include="RegionMst.cs">
-      <DependentUpon>J3PriceModel.tt</DependentUpon>
+      <DependentUpon>J3Price.tt</DependentUpon>
     </Compile>
     <Compile Include="SaleTypeMst.cs">
-      <DependentUpon>J3PriceModel.tt</DependentUpon>
+      <DependentUpon>J3Price.tt</DependentUpon>
     </Compile>
     <Compile Include="ServiceMst.cs">
-      <DependentUpon>J3PriceModel.tt</DependentUpon>
+      <DependentUpon>J3Price.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="J3PriceModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>J3PriceModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="J3PriceModel.edmx.diagram">
-      <DependentUpon>J3PriceModel.edmx</DependentUpon>
+    <EntityDeploy Include="J3Price.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>J3Price.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="J3Price.edmx.diagram">
+      <DependentUpon>J3Price.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="J3PriceModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>J3PriceModel.Context.cs</LastGenOutput>
-      <DependentUpon>J3PriceModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="J3PriceModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>J3PriceModel.edmx</DependentUpon>
-      <LastGenOutput>J3PriceModel.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="J3Price.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>J3Price.Context.cs</LastGenOutput>
+      <DependentUpon>J3Price.edmx</DependentUpon>
+    </Content>
+    <Content Include="J3Price.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>J3Price.edmx</DependentUpon>
+      <LastGenOutput>J3Price.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="J3PriceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="J3PriceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="ID" />
@@ -24,9 +24,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Region" Type="varchar" MaxLength="50" />
-          <Property Name="Server" Type="varchar" MaxLength="50" />
-          <Property Name="SaleType" Type="varchar" MaxLength="50" />
+          <Property Name="RegionID" Type="varchar" MaxLength="50" />
+          <Property Name="ServiceID" Type="varchar" MaxLength="50" />
+          <Property Name="SaleTypeCode" Type="varchar" MaxLength="50" />
           <Property Name="ProductID" Type="varchar" MaxLength="50" />
           <Property Name="ProducPrice" Type="varchar" MaxLength="50" />
           <Property Name="DealTime" Type="datetime" />
@@ -47,8 +47,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TypeCode" Type="varchar" MaxLength="50" />
-          <Property Name="TypeName" Type="varchar" MaxLength="50" />
+          <Property Name="SaleTypeCode" Type="varchar" MaxLength="50" />
+          <Property Name="SaleTypeName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ServiceMst">
           <Key>
@@ -66,7 +66,8 @@
           <EntitySet Name="SaleTypeMst" EntityType="Self.SaleTypeMst" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceMst" EntityType="Self.ServiceMst" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="J3PriceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -89,9 +90,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Region" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Server" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SaleType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SaleTypeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ProducPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DealTime" Type="DateTime" Precision="3" />
@@ -107,6 +108,14 @@
           <Property Name="RegionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RegionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="SaleTypeMst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SaleTypeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SaleTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="ServiceMst">
           <Key>
             <PropertyRef Name="ID" />
@@ -116,20 +125,12 @@
           <Property Name="ServiceID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="SaleTypeMst">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityContainer Name="J3PriceEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Products" EntityType="Self.Products" />
           <EntitySet Name="Quotes" EntityType="Self.Quotes" />
           <EntitySet Name="RegionMst" EntityType="Self.RegionMst" />
-          <EntitySet Name="ServiceMst" EntityType="Self.ServiceMst" />
           <EntitySet Name="SaleTypeMst" EntityType="Self.SaleTypeMst" />
+          <EntitySet Name="ServiceMst" EntityType="Self.ServiceMst" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -156,9 +157,9 @@
             <EntityTypeMapping TypeName="J3PriceModel.Quotes">
               <MappingFragment StoreEntitySet="Quotes">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Region" ColumnName="Region" />
-                <ScalarProperty Name="Server" ColumnName="Server" />
-                <ScalarProperty Name="SaleType" ColumnName="SaleType" />
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="SaleTypeCode" ColumnName="SaleTypeCode" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ProducPrice" ColumnName="ProducPrice" />
                 <ScalarProperty Name="DealTime" ColumnName="DealTime" />
@@ -177,6 +178,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SaleTypeMst">
+            <EntityTypeMapping TypeName="J3PriceModel.SaleTypeMst">
+              <MappingFragment StoreEntitySet="SaleTypeMst">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SaleTypeCode" ColumnName="SaleTypeCode" />
+                <ScalarProperty Name="SaleTypeName" ColumnName="SaleTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ServiceMst">
             <EntityTypeMapping TypeName="J3PriceModel.ServiceMst">
               <MappingFragment StoreEntitySet="ServiceMst">
@@ -184,15 +194,6 @@
                 <ScalarProperty Name="RegionID" ColumnName="RegionID" />
                 <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
                 <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SaleTypeMst">
-            <EntityTypeMapping TypeName="J3PriceModel.SaleTypeMst">
-              <MappingFragment StoreEntitySet="SaleTypeMst">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="TypeCode" ColumnName="TypeCode" />
-                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -212,7 +213,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
       </DesignerInfoPropertySet>
     </Options>

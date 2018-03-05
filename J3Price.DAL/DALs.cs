@@ -14,14 +14,15 @@ namespace J3Price.DAL
         /// <param name="productname"></param>
         /// <param name="dealtime"></param>
         /// <returns></returns>
-        public List<Quotes> GetQuotesList(string region ,string server,string productname,DateTime dealtime)
+        public List<Quotes> GetQuotesList(string regionid, string serviceid, string productname, DateTime dealtime)
         {
-            using (var db = new J3PriceEntities()) {
+            using (var db = new J3PriceEntities())
+            {
                 var q = from s in db.Quotes
                         join p in db.Products
                         on s.ProductID equals p.ProductID
-                        where s.Region == region
-                        && s.Server == server
+                        where s.RegionID == regionid
+                        && s.ServiceID == serviceid
                         && p.ProductName == productname
                         && s.DealTime == dealtime
                         select s;
@@ -40,7 +41,7 @@ namespace J3Price.DAL
         /// <param name="dealtime"></param>
         /// <param name="dealimageurl"></param>
         /// <param name="bidder"></param>
-        public void CreateQuote(string region, string server, string saletype,string productname,string productprice, DateTime dealtime,string dealimageurl,string bidder)
+        public void CreateQuote(string regionid, string serviceid, string saletype, string productname, string productprice, DateTime dealtime, string dealimageurl, string bidder)
         {
             using (var db = new J3PriceEntities())
             {
@@ -53,15 +54,16 @@ namespace J3Price.DAL
                         || s.ProductNickName5 == productname
                         select s.ProductID;
 
-                var quote = new Quotes {
-                    Region=region,
-                    Server =server,
-                    SaleType =saletype,
+                var quote = new Quotes
+                {
+                    RegionID = regionid,
+                    ServiceID = serviceid,
+                    SaleTypeCode = saletype,
                     ProductID = q.ToString(),
                     ProducPrice = productprice,
                     DealTime = dealtime,
                     DealImageUrl = dealimageurl,
-                    Bidder =bidder,
+                    Bidder = bidder,
                     QuotationTime = new DateTime()
                 };
                 try
