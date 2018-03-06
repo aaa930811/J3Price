@@ -14,9 +14,8 @@ namespace J3Price.DAL
     
     public partial class ServiceMst
     {
-        public int ID { get; set; }
-        public string RegionID { get; set; }
         public string ServiceID { get; set; }
         public string ServiceName { get; set; }
+        public string RegionID { get; set; }
     }
 }
