@@ -97,22 +97,22 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\J3PriceModels\J3PriceModels.csproj">
+      <Project>{7C390098-8CD6-4511-A81A-1559EB74EE72}</Project>
+      <Name>J3PriceModels</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="J3Price.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>J3Price.Context.cs</LastGenOutput>
       <DependentUpon>J3Price.edmx</DependentUpon>
+      <LastGenOutput>J3Price.Context.cs</LastGenOutput>
     </Content>
     <Content Include="J3Price.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>J3Price.edmx</DependentUpon>
       <LastGenOutput>J3Price.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\J3PriceModels\J3PriceModels.csproj">
-      <Project>{7C390098-8CD6-4511-A81A-1559EB74EE72}</Project>
-      <Name>J3PriceModels</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

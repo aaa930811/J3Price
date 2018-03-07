@@ -15,10 +15,10 @@ namespace J3Price.DAL
     public partial class Quotes
     {
         public int ID { get; set; }
-        public string RegionID { get; set; }
-        public string ServiceID { get; set; }
-        public string SaleTypeCode { get; set; }
-        public string ProductID { get; set; }
+        public Nullable<int> RegionID { get; set; }
+        public Nullable<int> ServiceID { get; set; }
+        public Nullable<int> SaleTypeCode { get; set; }
+        public Nullable<int> ProductID { get; set; }
         public string ProducPrice { get; set; }
         public Nullable<System.DateTime> DealTime { get; set; }
         public string DealImageUrl { get; set; }

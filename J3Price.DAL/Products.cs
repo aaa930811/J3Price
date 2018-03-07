@@ -14,7 +14,7 @@ namespace J3Price.DAL
     
     public partial class Products
     {
-        public string ProductID { get; set; }
+        public int ProductID { get; set; }
         public string ProductName { get; set; }
         public string ProductNickName1 { get; set; }
         public string ProductNickName2 { get; set; }

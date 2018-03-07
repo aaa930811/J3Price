@@ -14,7 +14,7 @@ namespace J3Price.DAL
     
     public partial class SaleTypeMst
     {
-        public string SaleTypeCode { get; set; }
+        public int SaleTypeCode { get; set; }
         public string SaleTypeName { get; set; }
     }
 }

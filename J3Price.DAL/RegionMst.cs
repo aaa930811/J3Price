@@ -14,7 +14,7 @@ namespace J3Price.DAL
     
     public partial class RegionMst
     {
-        public string RegionID { get; set; }
+        public int RegionID { get; set; }
         public string RegionName { get; set; }
     }
 }

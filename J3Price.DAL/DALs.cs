@@ -19,8 +19,8 @@ namespace J3Price.DAL
         {
             string str = model.Server;
             str = str.Substring(1, str.Length - 2);
-            string RegionID = str.Split(',')[0];
-            string ServiceID = str.Split(',')[1];
+            int RegionID = int.Parse(str.Split(',')[0]);
+            int ServiceID = int.Parse(str.Split(',')[1]);
             using (var db = new J3PriceEntities())
             {
                 var query = from q in db.Quotes
@@ -59,7 +59,7 @@ namespace J3Price.DAL
         /// <param name="dealtime"></param>
         /// <param name="dealimageurl"></param>
         /// <param name="bidder"></param>
-        public void CreateQuote(string regionid, string serviceid, string saletype, string productname, string productprice, DateTime dealtime, string dealimageurl, string bidder)
+        public void CreateQuote(int regionid, int serviceid, int saletype, string productname, string productprice, DateTime dealtime, string dealimageurl, string bidder)
         {
             using (var db = new J3PriceEntities())
             {
@@ -77,7 +77,7 @@ namespace J3Price.DAL
                     RegionID = regionid,
                     ServiceID = serviceid,
                     SaleTypeCode = saletype,
-                    ProductID = q.ToString(),
+                    ProductID = q.FirstOrDefault(),
                     ProducPrice = productprice,
                     DealTime = dealtime,
                     DealImageUrl = dealimageurl,
