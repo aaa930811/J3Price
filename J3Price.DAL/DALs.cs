@@ -37,6 +37,7 @@ namespace J3Price.DAL
                                 ID = q.ID,
                                 RegionName = r.RegionName,
                                 ServiceName = service.ServiceName,
+                                ServiceNickName = service.ServiceNickName,
                                 SaleTypeName = sale.SaleTypeName,
                                 ProductName = p.ProductName,
                                 ProducPrice = q.ProducPrice,
@@ -47,6 +48,8 @@ namespace J3Price.DAL
                 return query.ToList();
             }
         }
+
+       
 
         /// <summary>
         /// 创建报价信息
@@ -93,6 +96,37 @@ namespace J3Price.DAL
                 {
                     throw ex;
                 }
+            }
+        }
+
+
+        public List<RegionModel> GetRegionList() {
+            using (var db = new J3PriceEntities())
+            {
+                var query = from r in db.RegionMst
+                            select new RegionModel
+                            {
+                                region_id = r.RegionID,
+                                region_name = r.RegionName
+                            };
+                return query.ToList();
+            }
+        }
+
+        public List<ServiceModel> GerServiceList(int region_id)
+        {
+            using (var db = new J3PriceEntities())
+            {
+                var query = from r in db.ServiceMst
+                            where r.RegionID == region_id
+                            select new ServiceModel
+                            {
+                                service_id = r.ServiceID,
+                                region_id = r.RegionID,
+                                service_name = r.ServiceName,
+                                service_nickname = r.ServiceNickName
+                            };
+                return query.ToList();
             }
         }
     }

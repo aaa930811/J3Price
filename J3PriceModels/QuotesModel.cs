@@ -10,6 +10,7 @@ namespace J3PriceModels
         public int ID { get; set; }
         public string RegionName { get; set; }
         public string ServiceName { get; set; }
+        public string ServiceNickName { get; set; }
         public string SaleTypeName { get; set; }
         public string ProductName { get; set; }
         public string ProducPrice { get; set; }
@@ -28,6 +29,7 @@ namespace J3PriceModels
         public int ID { get; set; }
         public string RegionName { get; set; }
         public string ServiceName { get; set; }
+        public string ServiceNickName { get; set; }
         public string SaleTypeName { get; set; }
         public string ProductName { get; set; }
         public string ProducPrice { get; set; }

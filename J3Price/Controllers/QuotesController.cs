@@ -30,6 +30,7 @@ namespace J3Price.Controllers
                 qsm.ID = item.ID;
                 qsm.RegionName = item.RegionName;
                 qsm.ServiceName = item.ServiceName;
+                qsm.ServiceNickName = item.ServiceNickName;
                 qsm.SaleTypeName = item.SaleTypeName;
                 qsm.ProductName = item.ProductName;
                 qsm.ProducPrice = item.ProducPrice;
