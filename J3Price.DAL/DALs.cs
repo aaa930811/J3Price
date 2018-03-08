@@ -7,6 +7,7 @@ namespace J3Price.DAL
 {
     public class DALQuiz
     {
+        private J3PriceEntities db = new J3PriceEntities();
         /// <summary>
         /// 获取报价信息
         /// </summary>
@@ -21,35 +22,65 @@ namespace J3Price.DAL
             str = str.Substring(1, str.Length - 2);
             int RegionID = int.Parse(str.Split(',')[0]);
             int ServiceID = int.Parse(str.Split(',')[1]);
-            using (var db = new J3PriceEntities())
+
+            var _query = from q in db.Quotes
+                         join p in db.Products on q.ProductID equals p.ProductID
+                         join r in db.RegionMst on q.RegionID equals r.RegionID
+                         join service in db.ServiceMst on q.ServiceID equals service.ServiceID
+                         join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
+                         where q.RegionID == RegionID
+                         && p.ProductName == model.ProductName
+                         && q.DealTime == model.DealTime
+                         select new
+                         {
+                             q.ID,
+                             r.RegionName,
+                             service.ServiceID,
+                             service.ServiceName,
+                             service.ServiceNickName,
+                             sale.SaleTypeName,
+                             p.ProductName,
+                             q.ProducPrice,
+                             q.DealTime,
+                             q.Bidder,
+                             q.QuotationTime
+                         };
+            if (ServiceID == 0)
             {
-                var query = from q in db.Quotes
-                            join p in db.Products on q.ProductID equals p.ProductID
-                            join r in db.RegionMst on q.RegionID equals r.RegionID
-                            join service in db.ServiceMst on q.ServiceID equals service.ServiceID
-                            join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
-                            where q.RegionID == RegionID
-                            && q.ServiceID == ServiceID
-                            && p.ProductName == model.ProductName
-                            && q.DealTime == model.DealTime
-                            select new QuotesModel
-                            {
-                                ID = q.ID,
-                                RegionName = r.RegionName,
-                                ServiceName = service.ServiceName,
-                                ServiceNickName = service.ServiceNickName,
-                                SaleTypeName = sale.SaleTypeName,
-                                ProductName = p.ProductName,
-                                ProducPrice = q.ProducPrice,
-                                DealTime = q.DealTime,
-                                Bidder = q.Bidder,
-                                QuotationTime = q.QuotationTime
-                            };
-                return query.ToList();
+                //全部服务器
+                return _query.Select(x => new QuotesModel
+                {
+                    ID = x.ID,
+                    RegionName = x.RegionName,
+                    ServiceName = x.ServiceName,
+                    ServiceNickName = x.ServiceNickName,
+                    SaleTypeName = x.SaleTypeName,
+                    ProductName = x.ProductName,
+                    ProducPrice = x.ProducPrice,
+                    DealTime = x.DealTime,
+                    Bidder = x.Bidder,
+                    QuotationTime = x.QuotationTime
+                }).ToList();
+            }
+            else
+            {
+                return _query.Where(x => x.ServiceID == ServiceID).Select(x => new QuotesModel
+                {
+                    ID = x.ID,
+                    RegionName = x.RegionName,
+                    ServiceName = x.ServiceName,
+                    ServiceNickName = x.ServiceNickName,
+                    SaleTypeName = x.SaleTypeName,
+                    ProductName = x.ProductName,
+                    ProducPrice = x.ProducPrice,
+                    DealTime = x.DealTime,
+                    Bidder = x.Bidder,
+                    QuotationTime = x.QuotationTime
+                }).ToList();
             }
         }
 
-       
+
 
         /// <summary>
         /// 创建报价信息
@@ -99,35 +130,55 @@ namespace J3Price.DAL
             }
         }
 
+        public Products GetProductByName(string productName)
+        {
+            var query = from p in db.Products
+                        where p.ProductName == productName
+                        || p.ProductNickName1 == productName
+                        || p.ProductNickName2 == productName
+                        || p.ProductNickName3 == productName
+                        || p.ProductNickName4 == productName
+                        || p.ProductNickName5 == productName
+                        select p;
+            return query.FirstOrDefault();
+        }
 
-        public List<RegionModel> GetRegionList() {
-            using (var db = new J3PriceEntities())
+        public bool CreateProduct(Products product)
+        {
+            try
             {
-                var query = from r in db.RegionMst
-                            select new RegionModel
-                            {
-                                region_id = r.RegionID,
-                                region_name = r.RegionName
-                            };
-                return query.ToList();
+                db.Products.Add(product);
+                db.SaveChanges();
+                return true;
             }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public List<RegionModel> GetRegionList()
+        {
+            var query = from r in db.RegionMst
+                        select new RegionModel
+                        {
+                            region_id = r.RegionID,
+                            region_name = r.RegionName
+                        };
+            return query.ToList();
         }
 
         public List<ServiceModel> GerServiceList(int region_id)
         {
-            using (var db = new J3PriceEntities())
-            {
-                var query = from r in db.ServiceMst
-                            where r.RegionID == region_id
-                            select new ServiceModel
-                            {
-                                service_id = r.ServiceID,
-                                region_id = r.RegionID,
-                                service_name = r.ServiceName,
-                                service_nickname = r.ServiceNickName
-                            };
-                return query.ToList();
-            }
+            var query = from r in db.ServiceMst
+                        where r.RegionID == region_id
+                        select new ServiceModel
+                        {
+                            service_id = r.ServiceID,
+                            region_id = r.RegionID,
+                            service_name = r.ServiceName,
+                            service_nickname = r.ServiceNickName
+                        };
+            return query.ToList();
         }
     }
 }

@@ -37,4 +37,15 @@ namespace J3PriceModels
         public string Bidder { get; set; }
         public string QuotationTime { get; set; }
     }
+    public class QuotesPostModel
+    {
+        public int ID { get; set; }
+        public string Bidder { get; set; }
+        public string[] Server { get; set; }
+        public int SaleTypeCode { get; set; }
+        public string ProductName { get; set; }
+        public string ProductPrice { get; set; }
+        public string DealTime { get; set; }
+        public string DealImageUrl { get; set; }
+    }
 }

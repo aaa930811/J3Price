@@ -41,6 +41,13 @@ namespace J3Price.Controllers
             }
             return qsmlist;
         }
+
+        //[HttpPost]
+        //public bool SaveData(dynamic obj)
+        //{
+        //    var ProductName = Convert.ToString(obj.ProductName);
+        //    return true;
+        //}
         // GET: api/Quotes
         //public IQueryable<Quotes> GetQuotes()
         //{
@@ -96,18 +103,36 @@ namespace J3Price.Controllers
         }
 
         // POST: api/Quotes
-        [ResponseType(typeof(Quotes))]
-        public async Task<IHttpActionResult> PostQuotes(Quotes quotes)
+        [ResponseType(typeof(QuotesPostModel))]
+        public async Task<IHttpActionResult> PostQuotes(QuotesPostModel quotesPost)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.Quotes.Add(quotes);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = quotes.ID }, quotes);
+            var product = DAL.GetProductByName(quotesPost.ProductName);
+            
+            if (product!=null)
+            {
+                Quotes quotes = new Quotes();
+                quotes.RegionID = int.Parse(quotesPost.Server[0]);
+                quotes.ServiceID =int.Parse(quotesPost.Server[1]);
+                quotes.SaleTypeCode = quotesPost.SaleTypeCode;
+                quotes.ProductID = product.ProductID;
+                quotes.ProducPrice = quotesPost.ProductPrice;
+                quotes.DealTime = DateTime.Parse(quotesPost.DealTime);
+                quotes.DealImageUrl = quotesPost.DealImageUrl;
+                quotes.Bidder = quotesPost.Bidder;
+                quotes.QuotationTime = DateTime.Now;
+                db.Quotes.Add(quotes);
+                await db.SaveChangesAsync();
+                return CreatedAtRoute("DefaultApi", new { id = quotes.ID }, quotes);
+            }
+            else
+            {
+                //数据库没有这个物品
+                return BadRequest("找不到此物品"); ;
+            }
         }
 
         // DELETE: api/Quotes/5

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="J3PriceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="J3PriceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="ProductID" />
@@ -16,7 +16,7 @@
           <Property Name="ProductNickName3" Type="varchar" MaxLength="50" />
           <Property Name="ProductNickName4" Type="varchar" MaxLength="50" />
           <Property Name="ProductNickName5" Type="varchar" MaxLength="50" />
-          <Property Name="ProductImageUrl" Type="varchar" MaxLength="50" />
+          <Property Name="ProductImageUrl" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Quotes">
           <Key>
@@ -29,7 +29,7 @@
           <Property Name="ProductID" Type="int" />
           <Property Name="ProducPrice" Type="varchar" MaxLength="50" />
           <Property Name="DealTime" Type="datetime" />
-          <Property Name="DealImageUrl" Type="varchar" MaxLength="50" />
+          <Property Name="DealImageUrl" Type="varchar" MaxLength="250" />
           <Property Name="Bidder" Type="varchar" MaxLength="50" />
           <Property Name="QuotationTime" Type="datetime" />
         </EntityType>
@@ -63,8 +63,7 @@
           <EntitySet Name="SaleTypeMst" EntityType="Self.SaleTypeMst" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceMst" EntityType="Self.ServiceMst" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="J3PriceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -79,7 +78,7 @@
           <Property Name="ProductNickName3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ProductNickName4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ProductNickName5" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ProductImageUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductImageUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Quotes">
           <Key>
@@ -92,7 +91,7 @@
           <Property Name="ProductID" Type="Int32" />
           <Property Name="ProducPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DealTime" Type="DateTime" Precision="3" />
-          <Property Name="DealImageUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DealImageUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Bidder" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="QuotationTime" Type="DateTime" Precision="3" />
         </EntityType>
