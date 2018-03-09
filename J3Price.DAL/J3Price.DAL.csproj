@@ -50,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DALs.cs" />
+    <Compile Include="Exteriors.cs">
+      <DependentUpon>J3Price.tt</DependentUpon>
+    </Compile>
     <Compile Include="J3Price.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

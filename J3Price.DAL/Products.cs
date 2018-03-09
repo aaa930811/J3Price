@@ -22,5 +22,6 @@ namespace J3Price.DAL
         public string ProductNickName4 { get; set; }
         public string ProductNickName5 { get; set; }
         public string ProductImageUrl { get; set; }
+        public Nullable<int> ExteriorID { get; set; }
     }
 }

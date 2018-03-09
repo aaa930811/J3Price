@@ -25,11 +25,12 @@ namespace J3Price.DAL
 
             var _query = from q in db.Quotes
                          join p in db.Products on q.ProductID equals p.ProductID
+                         join e in db.Exteriors on p.ExteriorID equals e.ExteriorID
                          join r in db.RegionMst on q.RegionID equals r.RegionID
                          join service in db.ServiceMst on q.ServiceID equals service.ServiceID
                          join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
                          where q.RegionID == RegionID
-                         && p.ProductName == model.ProductName
+                         && e.ExteriorID == model.ExteriorID
                          && q.DealTime == model.DealTime
                          select new
                          {
@@ -45,38 +46,79 @@ namespace J3Price.DAL
                              q.Bidder,
                              q.QuotationTime
                          };
-            if (ServiceID == 0)
+            switch (ServiceID)
             {
-                //全部服务器
-                return _query.Select(x => new QuotesModel
-                {
-                    ID = x.ID,
-                    RegionName = x.RegionName,
-                    ServiceName = x.ServiceName,
-                    ServiceNickName = x.ServiceNickName,
-                    SaleTypeName = x.SaleTypeName,
-                    ProductName = x.ProductName,
-                    ProducPrice = x.ProducPrice,
-                    DealTime = x.DealTime,
-                    Bidder = x.Bidder,
-                    QuotationTime = x.QuotationTime
-                }).ToList();
-            }
-            else
-            {
-                return _query.Where(x => x.ServiceID == ServiceID).Select(x => new QuotesModel
-                {
-                    ID = x.ID,
-                    RegionName = x.RegionName,
-                    ServiceName = x.ServiceName,
-                    ServiceNickName = x.ServiceNickName,
-                    SaleTypeName = x.SaleTypeName,
-                    ProductName = x.ProductName,
-                    ProducPrice = x.ProducPrice,
-                    DealTime = x.DealTime,
-                    Bidder = x.Bidder,
-                    QuotationTime = x.QuotationTime
-                }).ToList();
+                case 0:
+                    //全部服务器
+                    if (model.ProductName==null)
+                    {
+                        //该外观所有物品
+                        return _query.Select(x => new QuotesModel
+                        {
+                            ID = x.ID,
+                            RegionName = x.RegionName,
+                            ServiceName = x.ServiceName,
+                            ServiceNickName = x.ServiceNickName,
+                            SaleTypeName = x.SaleTypeName,
+                            ProductName = x.ProductName,
+                            ProducPrice = x.ProducPrice,
+                            DealTime = x.DealTime,
+                            Bidder = x.Bidder,
+                            QuotationTime = x.QuotationTime
+                        }).ToList();
+                    }
+                    else
+                    {
+                        //指定物品
+                        return _query.Where(x=>x.ProductName==model.ProductName).Select(x => new QuotesModel
+                        {
+                            ID = x.ID,
+                            RegionName = x.RegionName,
+                            ServiceName = x.ServiceName,
+                            ServiceNickName = x.ServiceNickName,
+                            SaleTypeName = x.SaleTypeName,
+                            ProductName = x.ProductName,
+                            ProducPrice = x.ProducPrice,
+                            DealTime = x.DealTime,
+                            Bidder = x.Bidder,
+                            QuotationTime = x.QuotationTime
+                        }).ToList();
+                    }
+                default:
+                    //指定服务器
+                    if (model.ProductName == null)
+                    {
+                        //该外观所有物品
+                        return _query.Where(x => x.ServiceID == ServiceID).Select(x => new QuotesModel
+                        {
+                            ID = x.ID,
+                            RegionName = x.RegionName,
+                            ServiceName = x.ServiceName,
+                            ServiceNickName = x.ServiceNickName,
+                            SaleTypeName = x.SaleTypeName,
+                            ProductName = x.ProductName,
+                            ProducPrice = x.ProducPrice,
+                            DealTime = x.DealTime,
+                            Bidder = x.Bidder,
+                            QuotationTime = x.QuotationTime
+                        }).ToList();
+                    }
+                    else
+                    {
+                        return _query.Where(x => x.ServiceID == ServiceID&&x.ProductName==model.ProductName).Select(x => new QuotesModel
+                        {
+                            ID = x.ID,
+                            RegionName = x.RegionName,
+                            ServiceName = x.ServiceName,
+                            ServiceNickName = x.ServiceNickName,
+                            SaleTypeName = x.SaleTypeName,
+                            ProductName = x.ProductName,
+                            ProducPrice = x.ProducPrice,
+                            DealTime = x.DealTime,
+                            Bidder = x.Bidder,
+                            QuotationTime = x.QuotationTime
+                        }).ToList();
+                    }
             }
         }
 

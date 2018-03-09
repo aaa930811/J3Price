@@ -30,5 +30,6 @@ namespace J3Price.DAL
         public virtual DbSet<RegionMst> RegionMst { get; set; }
         public virtual DbSet<SaleTypeMst> SaleTypeMst { get; set; }
         public virtual DbSet<ServiceMst> ServiceMst { get; set; }
+        public virtual DbSet<Exteriors> Exteriors { get; set; }
     }
 }

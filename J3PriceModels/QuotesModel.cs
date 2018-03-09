@@ -21,6 +21,7 @@ namespace J3PriceModels
     public class QuotesQueryModel
     {
         public string Server { get; set; }
+        public int ExteriorID { get; set; }
         public string ProductName { get; set; }
         public Nullable<System.DateTime> DealTime { get; set; }
     }
