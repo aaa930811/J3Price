@@ -187,10 +187,12 @@
     <Compile Include="Controllers\QuotesController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\PictureResModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -247,7 +249,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -263,6 +264,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\J3Price.BLL\J3Price.BLL.csproj">
+      <Project>{f8b58bf7-6f10-49b5-a77a-6d439b4ea0b8}</Project>
+      <Name>J3Price.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\J3Price.DAL\J3Price.DAL.csproj">
       <Project>{1957a44c-66bd-4625-bc9c-4dc40b2591e9}</Project>
       <Name>J3Price.DAL</Name>
