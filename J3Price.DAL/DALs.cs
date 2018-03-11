@@ -30,8 +30,7 @@ namespace J3Price.DAL
                          join service in db.ServiceMst on q.ServiceID equals service.ServiceID
                          join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
                          where q.RegionID == RegionID
-                         && e.ExteriorID == model.ExteriorID
-                         && q.DealTime == model.DealTime
+                         orderby q.DealTime descending
                          select new
                          {
                              q.ID,
@@ -40,7 +39,13 @@ namespace J3Price.DAL
                              service.ServiceName,
                              service.ServiceNickName,
                              sale.SaleTypeName,
+                             e.ExteriorID,
                              p.ProductName,
+                             p.ProductNickName1,
+                             p.ProductNickName2,
+                             p.ProductNickName3,
+                             p.ProductNickName4,
+                             p.ProductNickName5,
                              q.ProducPrice,
                              q.DealTime,
                              q.Bidder,
@@ -50,10 +55,10 @@ namespace J3Price.DAL
             {
                 case 0:
                     //全部服务器
-                    if (model.ProductName==null)
+                    if (model.ProductName == null)
                     {
-                        //该外观所有物品
-                        return _query.Select(x => new QuotesModel
+                        //按外观类型查询
+                        return _query.Where(x=>x.ExteriorID ==model.ExteriorID).Select(x => new QuotesModel
                         {
                             ID = x.ID,
                             RegionName = x.RegionName,
@@ -69,8 +74,15 @@ namespace J3Price.DAL
                     }
                     else
                     {
-                        //指定物品
-                        return _query.Where(x=>x.ProductName==model.ProductName).Select(x => new QuotesModel
+                        //按物品名称查询(30条)
+                        return _query.Where(x =>
+                        x.ProductName == model.ProductName
+                        || x.ProductNickName1 == model.ProductName
+                        || x.ProductNickName2 == model.ProductName
+                        || x.ProductNickName3 == model.ProductName
+                        || x.ProductNickName4 == model.ProductName
+                        || x.ProductNickName5 == model.ProductName
+                        ).Select(x => new QuotesModel
                         {
                             ID = x.ID,
                             RegionName = x.RegionName,
@@ -82,14 +94,14 @@ namespace J3Price.DAL
                             DealTime = x.DealTime,
                             Bidder = x.Bidder,
                             QuotationTime = x.QuotationTime
-                        }).ToList();
+                        }).Take(30).ToList();
                     }
                 default:
                     //指定服务器
                     if (model.ProductName == null)
                     {
-                        //该外观所有物品
-                        return _query.Where(x => x.ServiceID == ServiceID).Select(x => new QuotesModel
+                        //按外观类型查询
+                        return _query.Where(x => x.ServiceID == ServiceID&&x.ExteriorID==model.ExteriorID).Select(x => new QuotesModel
                         {
                             ID = x.ID,
                             RegionName = x.RegionName,
@@ -105,7 +117,17 @@ namespace J3Price.DAL
                     }
                     else
                     {
-                        return _query.Where(x => x.ServiceID == ServiceID&&x.ProductName==model.ProductName).Select(x => new QuotesModel
+                        //按物品名称查询
+                        return _query.Where(x =>
+                        x.ServiceID == ServiceID
+                        && (x.ProductName == model.ProductName
+                        || x.ProductNickName1 == model.ProductName
+                        || x.ProductNickName2 == model.ProductName
+                        || x.ProductNickName3 == model.ProductName
+                        || x.ProductNickName4 == model.ProductName
+                        || x.ProductNickName5 == model.ProductName
+                        )
+                        ).Select(x => new QuotesModel
                         {
                             ID = x.ID,
                             RegionName = x.RegionName,
@@ -117,7 +139,7 @@ namespace J3Price.DAL
                             DealTime = x.DealTime,
                             Bidder = x.Bidder,
                             QuotationTime = x.QuotationTime
-                        }).ToList();
+                        }).Take(30).ToList();
                     }
             }
         }
