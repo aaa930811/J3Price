@@ -16,6 +16,7 @@ namespace J3PriceModels
         public string ProducPrice { get; set; }
         public Nullable<System.DateTime> DealTime { get; set; }
         public string Bidder { get; set; }
+        public bool IsAnonymous { get; set; }
         public Nullable<System.DateTime> QuotationTime { get; set; }
     }
     public class QuotesQueryModel
@@ -23,7 +24,7 @@ namespace J3PriceModels
         public string Server { get; set; }
         public int ExteriorID { get; set; }
         public string ProductName { get; set; }
-        public Nullable<System.DateTime> DealTime { get; set; }
+        public bool IsAnonymous { get; set; }
     }
     public class QuotesShowModel
     {
@@ -36,12 +37,14 @@ namespace J3PriceModels
         public string ProducPrice { get; set; }
         public string DealTime { get; set; }
         public string Bidder { get; set; }
+        public bool IsAnonymous { get; set; }
         public string QuotationTime { get; set; }
     }
     public class QuotesPostModel
     {
         public int ID { get; set; }
         public string Bidder { get; set; }
+        public bool IsAnonymous { get; set; }
         public string[] Server { get; set; }
         public int SaleTypeCode { get; set; }
         public string ProductName { get; set; }

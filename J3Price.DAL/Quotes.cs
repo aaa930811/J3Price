@@ -24,5 +24,6 @@ namespace J3Price.DAL
         public string DealImageUrl { get; set; }
         public string Bidder { get; set; }
         public Nullable<System.DateTime> QuotationTime { get; set; }
+        public bool IsAnonymous { get; set; }
     }
 }

@@ -35,7 +35,14 @@ namespace J3Price.Controllers
                 qsm.ProductName = item.ProductName;
                 qsm.ProducPrice = item.ProducPrice;
                 qsm.DealTime = item.DealTime.Value.ToShortDateString();
-                qsm.Bidder = item.Bidder;
+                if (item.IsAnonymous)
+                {
+                    qsm.Bidder = "***";
+                }
+                else {
+                    qsm.Bidder = item.Bidder;
+                }
+                
                 qsm.QuotationTime = item.QuotationTime.Value.ToShortDateString();
                 qsmlist.Add(qsm);
             }
@@ -123,6 +130,7 @@ namespace J3Price.Controllers
                 quotes.DealTime = DateTime.Parse(quotesPost.DealTime);
                 quotes.DealImageUrl = quotesPost.DealImageUrl;
                 quotes.Bidder = quotesPost.Bidder;
+                quotes.IsAnonymous = quotesPost.IsAnonymous;
                 quotes.QuotationTime = DateTime.Now;
                 db.Quotes.Add(quotes);
                 await db.SaveChangesAsync();

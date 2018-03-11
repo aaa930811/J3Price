@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="ExteriorID" />
           </Key>
-          <Property Name="ExteriorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExteriorID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ExteriorName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Products">
@@ -39,6 +39,7 @@
           <Property Name="DealTime" Type="datetime" />
           <Property Name="DealImageUrl" Type="varchar" MaxLength="250" />
           <Property Name="Bidder" Type="varchar" MaxLength="50" />
+          <Property Name="IsAnonymous" Type="bit" Nullable="false" />
           <Property Name="QuotationTime" Type="datetime" />
         </EntityType>
         <EntityType Name="RegionMst">
@@ -104,6 +105,7 @@
           <Property Name="DealImageUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Bidder" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="QuotationTime" Type="DateTime" Precision="3" />
+          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="RegionMst">
           <Key>
@@ -167,6 +169,7 @@
           <EntitySetMapping Name="Quotes">
             <EntityTypeMapping TypeName="J3PriceModel.Quotes">
               <MappingFragment StoreEntitySet="Quotes">
+                <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RegionID" ColumnName="RegionID" />
                 <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />

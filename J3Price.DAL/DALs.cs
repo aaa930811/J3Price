@@ -30,7 +30,7 @@ namespace J3Price.DAL
                          join service in db.ServiceMst on q.ServiceID equals service.ServiceID
                          join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
                          where q.RegionID == RegionID
-                         orderby q.DealTime descending
+                         orderby p.ProductName, q.DealTime descending
                          select new
                          {
                              q.ID,
@@ -49,6 +49,7 @@ namespace J3Price.DAL
                              q.ProducPrice,
                              q.DealTime,
                              q.Bidder,
+                             q.IsAnonymous,
                              q.QuotationTime
                          };
             switch (ServiceID)
@@ -58,7 +59,7 @@ namespace J3Price.DAL
                     if (model.ProductName == null)
                     {
                         //按外观类型查询
-                        return _query.Where(x=>x.ExteriorID ==model.ExteriorID).Select(x => new QuotesModel
+                        return _query.Where(x => x.ExteriorID == model.ExteriorID).Select(x => new QuotesModel
                         {
                             ID = x.ID,
                             RegionName = x.RegionName,
@@ -69,6 +70,7 @@ namespace J3Price.DAL
                             ProducPrice = x.ProducPrice,
                             DealTime = x.DealTime,
                             Bidder = x.Bidder,
+                            IsAnonymous = x.IsAnonymous,
                             QuotationTime = x.QuotationTime
                         }).ToList();
                     }
@@ -93,6 +95,7 @@ namespace J3Price.DAL
                             ProducPrice = x.ProducPrice,
                             DealTime = x.DealTime,
                             Bidder = x.Bidder,
+                            IsAnonymous = x.IsAnonymous,
                             QuotationTime = x.QuotationTime
                         }).Take(30).ToList();
                     }
@@ -101,7 +104,7 @@ namespace J3Price.DAL
                     if (model.ProductName == null)
                     {
                         //按外观类型查询
-                        return _query.Where(x => x.ServiceID == ServiceID&&x.ExteriorID==model.ExteriorID).Select(x => new QuotesModel
+                        return _query.Where(x => x.ServiceID == ServiceID && x.ExteriorID == model.ExteriorID).Select(x => new QuotesModel
                         {
                             ID = x.ID,
                             RegionName = x.RegionName,
@@ -112,6 +115,7 @@ namespace J3Price.DAL
                             ProducPrice = x.ProducPrice,
                             DealTime = x.DealTime,
                             Bidder = x.Bidder,
+                            IsAnonymous = x.IsAnonymous,
                             QuotationTime = x.QuotationTime
                         }).ToList();
                     }
@@ -138,6 +142,7 @@ namespace J3Price.DAL
                             ProducPrice = x.ProducPrice,
                             DealTime = x.DealTime,
                             Bidder = x.Bidder,
+                            IsAnonymous = x.IsAnonymous,
                             QuotationTime = x.QuotationTime
                         }).Take(30).ToList();
                     }
@@ -157,7 +162,7 @@ namespace J3Price.DAL
         /// <param name="dealtime"></param>
         /// <param name="dealimageurl"></param>
         /// <param name="bidder"></param>
-        public void CreateQuote(int regionid, int serviceid, int saletype, string productname, string productprice, DateTime dealtime, string dealimageurl, string bidder)
+        public void CreateQuote(int regionid, int serviceid, int saletype, string productname, string productprice, DateTime dealtime, string dealimageurl, string bidder, bool IsAnonymous)
         {
             using (var db = new J3PriceEntities())
             {
@@ -180,6 +185,7 @@ namespace J3Price.DAL
                     DealTime = dealtime,
                     DealImageUrl = dealimageurl,
                     Bidder = bidder,
+                    IsAnonymous = IsAnonymous,
                     QuotationTime = new DateTime()
                 };
                 try
