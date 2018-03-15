@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Advertisement.cs">
+      <DependentUpon>J3Price.tt</DependentUpon>
+    </Compile>
     <Compile Include="DALs.cs" />
     <Compile Include="Exteriors.cs">
       <DependentUpon>J3Price.tt</DependentUpon>

@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="J3PriceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Advertisement">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdImageUrl" Type="varchar" MaxLength="250" />
+        </EntityType>
         <EntityType Name="Exteriors">
           <Key>
             <PropertyRef Name="ExteriorID" />
@@ -66,6 +73,7 @@
           <Property Name="RegionID" Type="int" />
         </EntityType>
         <EntityContainer Name="J3PriceModelStoreContainer">
+          <EntitySet Name="Advertisement" EntityType="Self.Advertisement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Exteriors" EntityType="Self.Exteriors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quotes" EntityType="Self.Quotes" Schema="dbo" store:Type="Tables" />
@@ -137,6 +145,7 @@
           <EntitySet Name="SaleTypeMst" EntityType="Self.SaleTypeMst" />
           <EntitySet Name="ServiceMst" EntityType="Self.ServiceMst" />
           <EntitySet Name="Exteriors" EntityType="J3PriceModel.Exteriors" />
+          <EntitySet Name="Advertisement" EntityType="J3PriceModel.Advertisement" />
         </EntityContainer>
         <EntityType Name="Exteriors">
           <Key>
@@ -144,6 +153,13 @@
           </Key>
           <Property Name="ExteriorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ExteriorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Advertisement">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdImageUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -214,6 +230,14 @@
               <MappingFragment StoreEntitySet="Exteriors">
                 <ScalarProperty Name="ExteriorName" ColumnName="ExteriorName" />
                 <ScalarProperty Name="ExteriorID" ColumnName="ExteriorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Advertisement">
+            <EntityTypeMapping TypeName="J3PriceModel.Advertisement">
+              <MappingFragment StoreEntitySet="Advertisement">
+                <ScalarProperty Name="AdImageUrl" ColumnName="AdImageUrl" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,6 +1,7 @@
 ﻿using J3PriceModels;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace J3Price.DAL
@@ -22,6 +23,7 @@ namespace J3Price.DAL
             str = str.Substring(1, str.Length - 2);
             int RegionID = int.Parse(str.Split(',')[0]);
             int ServiceID = int.Parse(str.Split(',')[1]);
+            int Count = 5;//前N条
 
             var _query = from q in db.Quotes
                          join p in db.Products on q.ProductID equals p.ProductID
@@ -59,20 +61,30 @@ namespace J3Price.DAL
                     if (model.ProductName == null)
                     {
                         //按外观类型查询
-                        return _query.Where(x => x.ExteriorID == model.ExteriorID).Select(x => new QuotesModel
-                        {
-                            ID = x.ID,
-                            RegionName = x.RegionName,
-                            ServiceName = x.ServiceName,
-                            ServiceNickName = x.ServiceNickName,
-                            SaleTypeName = x.SaleTypeName,
-                            ProductName = x.ProductName,
-                            ProducPrice = x.ProducPrice,
-                            DealTime = x.DealTime,
-                            Bidder = x.Bidder,
-                            IsAnonymous = x.IsAnonymous,
-                            QuotationTime = x.QuotationTime
-                        }).ToList();
+                        string sqlQuery = "select * from(select SN = ROW_NUMBER()over(PARTITION by productid order by QuotationTime desc),* from quotes where RegionID=@RegionID)tmp where tmp.SN <= @Count";
+                        var list = db.Database.SqlQuery<Quotes>(sqlQuery, new SqlParameter("@RegionID", RegionID), new SqlParameter("@Count", Count));
+                        var query = from q in list
+                                    join p in db.Products on q.ProductID equals p.ProductID
+                                    join e in db.Exteriors on p.ExteriorID equals e.ExteriorID
+                                    join r in db.RegionMst on q.RegionID equals r.RegionID
+                                    join service in db.ServiceMst on q.ServiceID equals service.ServiceID
+                                    join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
+                                    where e.ExteriorID == model.ExteriorID
+                                    select new QuotesModel
+                                    {
+                                        ID = q.ID,
+                                        RegionName = r.RegionName,
+                                        ServiceName = service.ServiceName,
+                                        ServiceNickName = service.ServiceNickName,
+                                        SaleTypeName = sale.SaleTypeName,
+                                        ProductName = p.ProductName,
+                                        ProducPrice = q.ProducPrice,
+                                        DealTime = q.DealTime,
+                                        Bidder = q.Bidder,
+                                        IsAnonymous = q.IsAnonymous,
+                                        QuotationTime = q.QuotationTime
+                                    };
+                        return query.ToList();
                     }
                     else
                     {
@@ -104,20 +116,30 @@ namespace J3Price.DAL
                     if (model.ProductName == null)
                     {
                         //按外观类型查询
-                        return _query.Where(x => x.ServiceID == ServiceID && x.ExteriorID == model.ExteriorID).Select(x => new QuotesModel
-                        {
-                            ID = x.ID,
-                            RegionName = x.RegionName,
-                            ServiceName = x.ServiceName,
-                            ServiceNickName = x.ServiceNickName,
-                            SaleTypeName = x.SaleTypeName,
-                            ProductName = x.ProductName,
-                            ProducPrice = x.ProducPrice,
-                            DealTime = x.DealTime,
-                            Bidder = x.Bidder,
-                            IsAnonymous = x.IsAnonymous,
-                            QuotationTime = x.QuotationTime
-                        }).ToList();
+                        string sqlQuery = "select * from(select SN = ROW_NUMBER()over(PARTITION by productid order by DealTime desc),* from quotes where RegionID=@RegionID and ServiceID=@ServiceID)tmp where tmp.SN <= @Count";
+                        var list = db.Database.SqlQuery<Quotes>(sqlQuery,new SqlParameter("@RegionID", RegionID),new SqlParameter("@ServiceID", ServiceID),new SqlParameter("@Count", Count));
+                        var query = from q in list
+                                    join p in db.Products on q.ProductID equals p.ProductID
+                                    join e in db.Exteriors on p.ExteriorID equals e.ExteriorID
+                                    join r in db.RegionMst on q.RegionID equals r.RegionID
+                                    join service in db.ServiceMst on q.ServiceID equals service.ServiceID
+                                    join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
+                                    where e.ExteriorID == model.ExteriorID
+                                    select new QuotesModel
+                                    {
+                                        ID = q.ID,
+                                        RegionName = r.RegionName,
+                                        ServiceName = service.ServiceName,
+                                        ServiceNickName = service.ServiceNickName,
+                                        SaleTypeName = sale.SaleTypeName,
+                                        ProductName = p.ProductName,
+                                        ProducPrice = q.ProducPrice,
+                                        DealTime = q.DealTime,
+                                        Bidder = q.Bidder,
+                                        IsAnonymous = q.IsAnonymous,
+                                        QuotationTime = q.QuotationTime
+                                    };
+                        return query.ToList();
                     }
                     else
                     {
@@ -213,6 +235,25 @@ namespace J3Price.DAL
             return query.FirstOrDefault();
         }
 
+        public List<ProductModel> GetProduts() {
+            var query = from s in db.Products
+                        join e in db.Exteriors on s.ExteriorID equals e.ExteriorID
+                        orderby e.ExteriorName
+                        select new ProductModel
+                        {
+                            ProductID = s.ProductID,
+                            ProductName = s.ProductName,
+                            ProductNickName1 = s.ProductNickName1,
+                            ProductNickName2 = s.ProductNickName2,
+                            ProductNickName3 = s.ProductNickName3,
+                            ProductNickName4= s.ProductNickName4,
+                            ProductNickName5 = s.ProductNickName5,
+                            ProductImageUrl = s.ProductImageUrl,
+                            ExteriorName = e.ExteriorName,
+                        };
+            return query.ToList();
+        }
+
         public bool CreateProduct(Products product)
         {
             try
@@ -249,6 +290,12 @@ namespace J3Price.DAL
                             service_nickname = r.ServiceNickName
                         };
             return query.ToList();
+        }
+
+        public string[] GetAdImageUrl() {
+            var query = from s in db.Advertisement
+                        select s.AdImageUrl;
+            return query.ToArray();
         }
     }
 }
