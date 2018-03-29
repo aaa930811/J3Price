@@ -14,7 +14,7 @@ namespace J3Price.Controllers
         DALQuiz DAL = new DALQuiz();
         
         public IHttpActionResult GetService(int region_id) {
-            var servicelist = DAL.GerServiceList(region_id);
+            var servicelist = DAL.GetServiceList(region_id);
             return Json(servicelist);
         }
     }

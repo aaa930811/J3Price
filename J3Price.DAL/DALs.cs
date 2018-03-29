@@ -196,28 +196,35 @@ namespace J3Price.DAL
                         || s.ProductNickName4 == productname
                         || s.ProductNickName5 == productname
                         select s.ProductID;
-
-                var quote = new Quotes
+                int productid = q.FirstOrDefault();
+                if (productid==0)
                 {
-                    RegionID = regionid,
-                    ServiceID = serviceid,
-                    SaleTypeCode = saletype,
-                    ProductID = q.FirstOrDefault(),
-                    ProducPrice = productprice,
-                    DealTime = dealtime,
-                    DealImageUrl = dealimageurl,
-                    Bidder = bidder,
-                    IsAnonymous = IsAnonymous,
-                    QuotationTime = new DateTime()
-                };
-                try
-                {
-                    db.Quotes.Add(quote);
-                    db.SaveChanges();
+                    //找不到该物品
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw ex;
+                    var quote = new Quotes
+                    {
+                        RegionID = regionid,
+                        ServiceID = serviceid,
+                        SaleTypeCode = saletype,
+                        ProductID = q.FirstOrDefault(),
+                        ProducPrice = productprice,
+                        DealTime = dealtime,
+                        DealImageUrl = dealimageurl,
+                        Bidder = bidder,
+                        IsAnonymous = IsAnonymous,
+                        QuotationTime = DateTime.Now
+                    };
+                    try
+                    {
+                        db.Quotes.Add(quote);
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
             }
         }
@@ -233,6 +240,21 @@ namespace J3Price.DAL
                         || p.ProductNickName5 == productName
                         select p;
             return query.FirstOrDefault();
+        }
+
+        public ServiceMst GetServiceMstByName(string name)
+        {
+            var q = from s in db.ServiceMst
+                    where s.ServiceName.Contains(name) || s.ServiceNickName.Contains(name)
+                    select s;
+            return q.FirstOrDefault();
+        }
+        public int GetSaleCodeByName(string name)
+        {
+            var q = from s in db.SaleTypeMst
+                    where s.SaleTypeName == name
+                    select s;
+            return q.FirstOrDefault().SaleTypeCode;
         }
 
         public List<ProductModel> GetProduts() {
@@ -278,7 +300,7 @@ namespace J3Price.DAL
             return query.ToList();
         }
 
-        public List<ServiceModel> GerServiceList(int region_id)
+        public List<ServiceModel> GetServiceList(int region_id)
         {
             var query = from r in db.ServiceMst
                         where r.RegionID == region_id
