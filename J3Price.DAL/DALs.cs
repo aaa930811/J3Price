@@ -260,7 +260,7 @@ namespace J3Price.DAL
         public List<ProductModel> GetProduts() {
             var query = from s in db.Products
                         join e in db.Exteriors on s.ExteriorID equals e.ExteriorID
-                        orderby e.ExteriorName
+                        orderby e.ExteriorName,s.ProductName
                         select new ProductModel
                         {
                             ProductID = s.ProductID,
