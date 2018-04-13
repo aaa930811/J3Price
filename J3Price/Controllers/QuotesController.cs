@@ -40,7 +40,7 @@ namespace J3Price.Controllers
                     qsm.Bidder = "***";
                 }
                 else {
-                    qsm.Bidder = item.Bidder;
+                    qsm.Bidder = item.Bidder.Substring(0,8);
                 }
                 
                 qsm.QuotationTime = item.QuotationTime.Value.ToShortDateString();
@@ -139,7 +139,7 @@ namespace J3Price.Controllers
             else
             {
                 //数据库没有这个物品
-                return BadRequest("找不到此物品"); ;
+                return BadRequest("外观名错误。关键词列表请看公众号菜单栏~"); ;
             }
         }
 
