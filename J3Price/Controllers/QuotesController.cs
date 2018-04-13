@@ -40,7 +40,7 @@ namespace J3Price.Controllers
                     qsm.Bidder = "***";
                 }
                 else {
-                    qsm.Bidder = item.Bidder.Substring(0,8);
+                    qsm.Bidder = item.Bidder;
                 }
                 
                 qsm.QuotationTime = item.QuotationTime.Value.ToShortDateString();
