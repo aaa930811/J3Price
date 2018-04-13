@@ -139,7 +139,7 @@ namespace J3Price.Controllers
             else
             {
                 //数据库没有这个物品
-                return BadRequest("外观名错误。关键词列表请看公众号菜单栏~"); ;
+                return BadRequest("找不到该物品");
             }
         }
 
