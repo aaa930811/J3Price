@@ -39,8 +39,8 @@ namespace J3PriceFileReader
                 int salecode = DAL.GetSaleCodeByName(saletypeName);
                 try
                 {
-                    DAL.CreateQuote((int)mst.RegionID, mst.ServiceID, salecode, product, price, time, null, name, false);
-                    log.Info(name+'：'+serviceName+' '+price+' '+saletypeName+' '+product+' '+time +" 录入成功");
+                    string mess = DAL.CreateQuote((int)mst.RegionID, mst.ServiceID, salecode, product, price, time, null, name, false);
+                    log.Info(name+'：'+serviceName+' '+price+' '+saletypeName+' '+product+' '+time +' '+ mess);
                 }
                 catch (Exception ex)
                 {

@@ -184,7 +184,7 @@ namespace J3Price.DAL
         /// <param name="dealtime"></param>
         /// <param name="dealimageurl"></param>
         /// <param name="bidder"></param>
-        public void CreateQuote(int regionid, int serviceid, int saletype, string productname, string productprice, DateTime dealtime, string dealimageurl, string bidder, bool IsAnonymous)
+        public string CreateQuote(int regionid, int serviceid, int saletype, string productname, string productprice, DateTime dealtime, string dealimageurl, string bidder, bool IsAnonymous)
         {
             using (var db = new J3PriceEntities())
             {
@@ -200,6 +200,7 @@ namespace J3Price.DAL
                 if (productid==0)
                 {
                     //找不到该物品
+                    return "找不到该物品，录入失败";
                 }
                 else
                 {
@@ -216,14 +217,32 @@ namespace J3Price.DAL
                         IsAnonymous = IsAnonymous,
                         QuotationTime = DateTime.Now
                     };
-                    try
+                    bool bReturn = db.Quotes.Any(x =>
+                    x.RegionID == regionid
+                    && x.ServiceID == serviceid
+                    && x.SaleTypeCode==saletype
+                    && x.ProductID==productid
+                    && x.ProducPrice==productprice
+                    && x.DealTime== dealtime
+                    && x.Bidder== bidder);
+                    if (!bReturn)
                     {
-                        db.Quotes.Add(quote);
-                        db.SaveChanges();
+                        //数据不存在,则插入
+                        try
+                        {
+                            db.Quotes.Add(quote);
+                            db.SaveChanges();
+                            return "录入成功";
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        throw ex;
+                        //数据已存在
+                        return "数据已存在，录入失败";
                     }
                 }
             }
