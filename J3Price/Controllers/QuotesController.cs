@@ -34,7 +34,7 @@ namespace J3Price.Controllers
                 qsm.SaleTypeName = item.SaleTypeName;
                 qsm.ProductName = item.ProductName;
                 qsm.ProducPrice = item.ProducPrice;
-                qsm.DealTime = item.DealTime.Value.ToShortDateString();
+                qsm.DealTime = item.DealTime.Value.ToString("MM-dd");
                 if (item.IsAnonymous)
                 {
                     qsm.Bidder = "***";
