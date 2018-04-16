@@ -117,24 +117,32 @@ namespace J3Price.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var product = DAL.GetProductByName(quotesPost.ProductName);
+            var productList = DAL.GetProductByName(quotesPost.ProductName);
             
-            if (product!=null)
+            if (productList != null|| productList.Count>0)
             {
-                Quotes quotes = new Quotes();
-                quotes.RegionID = int.Parse(quotesPost.Server[0]);
-                quotes.ServiceID =int.Parse(quotesPost.Server[1]);
-                quotes.SaleTypeCode = quotesPost.SaleTypeCode;
-                quotes.ProductID = product.ProductID;
-                quotes.ProducPrice = quotesPost.ProductPrice;
-                quotes.DealTime = DateTime.Parse(quotesPost.DealTime);
-                quotes.DealImageUrl = quotesPost.DealImageUrl;
-                quotes.Bidder = quotesPost.Bidder;
-                quotes.IsAnonymous = quotesPost.IsAnonymous;
-                quotes.QuotationTime = DateTime.Now;
-                db.Quotes.Add(quotes);
-                await db.SaveChangesAsync();
-                return CreatedAtRoute("DefaultApi", new { id = quotes.ID }, quotes);
+                if (productList.Count == 1)
+                {
+                    Quotes quotes = new Quotes();
+                    quotes.RegionID = int.Parse(quotesPost.Server[0]);
+                    quotes.ServiceID = int.Parse(quotesPost.Server[1]);
+                    quotes.SaleTypeCode = quotesPost.SaleTypeCode;
+                    quotes.ProductID = productList.FirstOrDefault().ProductID;
+                    quotes.ProducPrice = quotesPost.ProductPrice;
+                    quotes.DealTime = DateTime.Parse(quotesPost.DealTime);
+                    quotes.DealImageUrl = quotesPost.DealImageUrl;
+                    quotes.Bidder = quotesPost.Bidder;
+                    quotes.IsAnonymous = quotesPost.IsAnonymous;
+                    quotes.QuotationTime = DateTime.Now;
+                    db.Quotes.Add(quotes);
+                    await db.SaveChangesAsync();
+                    return CreatedAtRoute("DefaultApi", new { id = quotes.ID }, quotes);
+                }
+                else
+                {
+                    //报价的是一个系列
+                    return BadRequest("请输入具体外观名，不能输入指代多个外观的系列名哦~");
+                }
             }
             else
             {

@@ -70,6 +70,7 @@ namespace J3Price.DAL
                                     join service in db.ServiceMst on q.ServiceID equals service.ServiceID
                                     join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
                                     where e.ExteriorID == model.ExteriorID
+                                    orderby p.ProductName, q.DealTime descending
                                     select new QuotesModel
                                     {
                                         ID = q.ID,
@@ -125,6 +126,7 @@ namespace J3Price.DAL
                                     join service in db.ServiceMst on q.ServiceID equals service.ServiceID
                                     join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
                                     where e.ExteriorID == model.ExteriorID
+                                    orderby p.ProductName, q.DealTime descending
                                     select new QuotesModel
                                     {
                                         ID = q.ID,
@@ -248,7 +250,7 @@ namespace J3Price.DAL
             }
         }
 
-        public Products GetProductByName(string productName)
+        public List<Products> GetProductByName(string productName)
         {
             var query = from p in db.Products
                         where p.ProductName == productName
@@ -258,7 +260,7 @@ namespace J3Price.DAL
                         || p.ProductNickName4 == productName
                         || p.ProductNickName5 == productName
                         select p;
-            return query.FirstOrDefault();
+            return query.ToList();
         }
 
         public ServiceMst GetServiceMstByName(string name)
