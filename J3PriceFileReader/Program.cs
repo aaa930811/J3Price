@@ -35,10 +35,10 @@ namespace J3PriceFileReader
                 string saletypeName = info[2];
                 string product = info[3];
                 DateTime time = DateTime.Parse(info[4]);
-                ServiceMst mst = DAL.GetServiceMstByName(serviceName);
-                int salecode = DAL.GetSaleCodeByName(saletypeName);
                 try
                 {
+                    ServiceMst mst = DAL.GetServiceMstByName(serviceName);
+                    int salecode = DAL.GetSaleCodeByName(saletypeName);
                     string mess = DAL.CreateQuote((int)mst.RegionID, mst.ServiceID, salecode, product, price, time, null, name, false);
                     log.Info(name+'：'+serviceName+' '+price+' '+saletypeName+' '+product+' '+time +' '+ mess);
                 }

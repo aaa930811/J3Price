@@ -34,13 +34,13 @@ namespace J3Price.Controllers
                 qsm.SaleTypeName = item.SaleTypeName;
                 qsm.ProductName = item.ProductName;
                 qsm.ProducPrice = item.ProducPrice;
-                qsm.DealTime = item.DealTime.Value.ToShortDateString();
+                qsm.DealTime = item.DealTime.Value.Year.ToString().Substring(2,2)+'/'+ item.DealTime.Value.ToString("MM/dd");
                 if (item.IsAnonymous)
                 {
                     qsm.Bidder = "***";
                 }
                 else {
-                    qsm.Bidder = item.Bidder.Replace("?", "");
+                    qsm.Bidder = BLL.J3Price_Helper.RemoveSpecialCharacter(item.Bidder);//处理表情符号
                 }
                 
                 qsm.QuotationTime = item.QuotationTime.Value.ToShortDateString();
@@ -129,7 +129,7 @@ namespace J3Price.Controllers
                 quotes.ProducPrice = quotesPost.ProductPrice;
                 quotes.DealTime = DateTime.Parse(quotesPost.DealTime);
                 quotes.DealImageUrl = quotesPost.DealImageUrl;
-                quotes.Bidder = quotesPost.Bidder;
+                quotes.Bidder = BLL.J3Price_Helper.RemoveSpecialCharacter(quotesPost.Bidder);
                 quotes.IsAnonymous = quotesPost.IsAnonymous;
                 quotes.QuotationTime = DateTime.Now;
                 db.Quotes.Add(quotes);
@@ -139,7 +139,7 @@ namespace J3Price.Controllers
             else
             {
                 //数据库没有这个物品
-                return BadRequest("找不到此物品"); ;
+                return BadRequest("找不到该物品");
             }
         }
 
