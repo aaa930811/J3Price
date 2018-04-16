@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace J3Price.BLL
@@ -19,6 +20,10 @@ namespace J3Price.BLL
                 Directory.CreateDirectory(filePath);
             }
             return true;
+        }
+        public static String RemoveSpecialCharacter(String hexData)
+        {
+            return Regex.Replace(hexData, "[ \\[ \\] \\^ \\-_*×――(^)$%~!@#$…&%￥—+=<>《》!！??？:：•`·、。，；,.;\"‘’“”-]", "");
         }
     }
 }

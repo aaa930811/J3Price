@@ -40,7 +40,7 @@ namespace J3Price.Controllers
                     qsm.Bidder = "***";
                 }
                 else {
-                    qsm.Bidder = item.Bidder;
+                    qsm.Bidder = BLL.J3Price_Helper.RemoveSpecialCharacter(item.Bidder);//处理表情符号
                 }
                 
                 qsm.QuotationTime = item.QuotationTime.Value.ToShortDateString();
@@ -119,7 +119,7 @@ namespace J3Price.Controllers
             }
             var productList = DAL.GetProductByName(quotesPost.ProductName);
             
-            if (productList != null|| productList.Count>0)
+            if (productList.Count>0)
             {
                 if (productList.Count == 1)
                 {
@@ -131,7 +131,7 @@ namespace J3Price.Controllers
                     quotes.ProducPrice = quotesPost.ProductPrice;
                     quotes.DealTime = DateTime.Parse(quotesPost.DealTime);
                     quotes.DealImageUrl = quotesPost.DealImageUrl;
-                    quotes.Bidder = quotesPost.Bidder;
+                    quotes.Bidder = BLL.J3Price_Helper.RemoveSpecialCharacter(quotesPost.Bidder);
                     quotes.IsAnonymous = quotesPost.IsAnonymous;
                     quotes.QuotationTime = DateTime.Now;
                     db.Quotes.Add(quotes);
