@@ -147,7 +147,9 @@ namespace J3Price.Controllers
             else
             {
                 //数据库没有这个物品
-                return BadRequest("找不到该物品");
+                //log
+                LogHelper.WriteLog("错误物品名称：" + quotesPost.ProductName);
+                return BadRequest("物品关键词错误。是否需要跳转关键词列表？");
             }
         }
 
