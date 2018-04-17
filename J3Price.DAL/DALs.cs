@@ -54,6 +54,12 @@ namespace J3Price.DAL
                              q.IsAnonymous,
                              q.QuotationTime
                          };
+            var _query2 = from s in db.Products
+                         join e in db.Exteriors on s.ExteriorID equals e.ExteriorID
+                         orderby e.ExteriorName
+                         select s.ProductName;
+            string[] order = _query2.ToArray();//获取关键词列表
+
             switch (ServiceID)
             {
                 case 0:
@@ -70,7 +76,6 @@ namespace J3Price.DAL
                                     join service in db.ServiceMst on q.ServiceID equals service.ServiceID
                                     join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
                                     where e.ExteriorID == model.ExteriorID
-                                    orderby p.ProductName, q.DealTime descending
                                     select new QuotesModel
                                     {
                                         ID = q.ID,
@@ -85,7 +90,7 @@ namespace J3Price.DAL
                                         IsAnonymous = q.IsAnonymous,
                                         QuotationTime = q.QuotationTime
                                     };
-                        return query.ToList();
+                        return query.AsEnumerable().OrderBy(a=>Array.IndexOf(order,a.ProductName)).ThenByDescending(a=>a.DealTime);//按照关键词列表排序
                     }
                     else
                     {
@@ -126,7 +131,6 @@ namespace J3Price.DAL
                                     join service in db.ServiceMst on q.ServiceID equals service.ServiceID
                                     join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
                                     where e.ExteriorID == model.ExteriorID
-                                    orderby p.ProductName, q.DealTime descending
                                     select new QuotesModel
                                     {
                                         ID = q.ID,
@@ -141,7 +145,7 @@ namespace J3Price.DAL
                                         IsAnonymous = q.IsAnonymous,
                                         QuotationTime = q.QuotationTime
                                     };
-                        return query.ToList();
+                        return query.AsEnumerable().OrderBy(a => Array.IndexOf(order, a.ProductName)).ThenByDescending(a => a.DealTime);//按照关键词列表排序
                     }
                     else
                     {
