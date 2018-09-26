@@ -32,7 +32,7 @@ namespace J3Price.DAL
                          join service in db.ServiceMst on q.ServiceID equals service.ServiceID
                          join sale in db.SaleTypeMst on q.SaleTypeCode equals sale.SaleTypeCode
                          where q.RegionID == RegionID
-                         orderby p.ProductName, q.DealTime descending
+                         orderby p.ProductName, q.DealTime descending,q.QuotationTime descending
                          select new
                          {
                              q.ID,
@@ -90,7 +90,7 @@ namespace J3Price.DAL
                                         IsAnonymous = q.IsAnonymous,
                                         QuotationTime = q.QuotationTime
                                     };
-                        return query.AsEnumerable().OrderBy(a=>Array.IndexOf(order,a.ProductName)).ThenByDescending(a=>a.DealTime);//按照关键词列表排序
+                        return query.AsEnumerable().OrderBy(a=>Array.IndexOf(order,a.ProductName)).ThenByDescending(a=>a.DealTime).ThenByDescending(a=>a.QuotationTime);//按照关键词列表排序、成交时间降序排列、报价时间降序排列
                     }
                     else
                     {
@@ -145,7 +145,7 @@ namespace J3Price.DAL
                                         IsAnonymous = q.IsAnonymous,
                                         QuotationTime = q.QuotationTime
                                     };
-                        return query.AsEnumerable().OrderBy(a => Array.IndexOf(order, a.ProductName)).ThenByDescending(a => a.DealTime);//按照关键词列表排序
+                        return query.AsEnumerable().OrderBy(a => Array.IndexOf(order, a.ProductName)).ThenByDescending(a => a.DealTime).ThenByDescending(a => a.QuotationTime);//按照关键词列表排序、成交时间降序排列、报价时间降序排列
                     }
                     else
                     {
